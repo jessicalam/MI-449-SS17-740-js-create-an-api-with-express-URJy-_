@@ -1,4 +1,4 @@
-var todolist = require('./todolist.js')
+var todos = require('./todos.js')
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
@@ -6,50 +6,46 @@ app.use(bodyParser.json())
 var port = process.env.PORT || 8080
 
 // retrieves todo list
-app.get('/todolist', function (request, response) {
-  response.json(todolist)
+app.get('/todos', function (request, response) {
+  response.json(todos)
 })
 
 // retrieves specific todo item
-app.get('/todolist/:id', function (request, response) {
-  if (!todolist[request.params.id]) {
+app.get('/todos/:id', function (request, response) {
+  if (!todos[request.params.id]) {
     response.status(404).end('Oops! There is no task for ' + request.params.id)
     return
   }
-  response.json(todolist[request.params.id])
+  response.json(todos[request.params.id])
 })
 
-// adds new todo item
-app.post('/todolist', function (request, response) {
+app.post('/todos', function (request, response) {
   var id = request.body.task.trim().toLowerCase().split(' ').join('-')
-  todolist[id] = {
+  todos[id] = { // adds new todo item
     task: request.body.task.trim(),
     isDone: request.body.isDone
   }
-  response.redirect('/todolist/' + id)
+  response.redirect('/todos/' + id)
 })
 
-// deletes todo item
-app.delete('/todolist/:id', function (request, response) {
-  delete todolist[request.params.id]
-  response.redirect('/todolist')
+app.delete('/todos/:id', function (request, response) {
+  delete todos[request.params.id] // deletes todo item
+  response.redirect('/todos')
 })
 
-// updates todo item
-app.put('/todolist/:id', function (request, response) {
-  var product = todolist[request.params.id]
+app.put('/todos/:id', function (request, response) { // updates todo item
+  var product = todos[request.params.id]
   if (request.body.task !== undefined) {
     product.task = request.body.task.trim()
   }
   if (request.body.isDone !== undefined) {
     product.isDone = request.body.isDone
   }
-  response.redirect('/todolist')
+  response.redirect('/todos')
 })
 
-// listens for bad requests
 app.use(function (request, response, next) {
-  response.status(404).end(request.url + ' not found')
+  response.status(404).end(request.url + ' not found') // listens for bad requests
 })
 
 app.listen(port)

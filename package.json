@@ -10,10 +10,6 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
-    "live-server": "^1.2.0",
-    "node-sass": "^4.5.2",
-    "nodemon": "^1.11.0",
-    "npm-run-all": "^4.0.2",
-    "surge": "^0.19.0"
+    "nodemon": "^1.11.0"
   }
 }
