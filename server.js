@@ -13,7 +13,7 @@ app.get('/todos', function (request, response) {
 // retrieves specific todo item
 app.get('/todos/:id', function (request, response) {
   if (!todos[request.params.id]) {
-    response.status(404).end('Oops! There is no task for ' + request.params.id)
+    response.status(404).end('There is no task for ' + request.params.id)
     return
   }
   response.json(todos[request.params.id])
@@ -45,7 +45,7 @@ app.put('/todos/:id', function (request, response) { // updates todo item
 })
 
 app.use(function (request, response, next) {
-  response.status(404).end(request.url + ' not found') // listens for bad requests
+  response.status(404).end(request.url + 'not found') // listens for bad requests
 })
 
 app.listen(port)
