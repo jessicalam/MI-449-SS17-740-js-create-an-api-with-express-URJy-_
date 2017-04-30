@@ -44,8 +44,9 @@ app.put('/todos/:id', function (request, response) { // updates todo item
   response.redirect('/todos')
 })
 
-app.use(function (request, response, next) {
+/* app.use(function (request, response, next) {
   response.status(404).end(request.url + ' not found') // listens for bad requests
 })
+*/
 
 app.listen(port)
