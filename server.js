@@ -29,12 +29,20 @@ app.post('/todos', function (request, response) {
 })
 
 app.delete('/todos/:id', function (request, response) {
+  if (!todos[request.params.id]) {
+    response.status(404).end('There is no task for ' + request.params.id)
+    return
+  }
   delete todos[request.params.id] // deletes todo item
   response.redirect('/todos')
 })
 
 app.put('/todos/:id', function (request, response) { // updates todo item
   var product = todos[request.params.id]
+  if (!todos[request.params.id]) {
+    response.status(404).end('There is no task for ' + request.params.id)
+    return
+  }
   if (request.body.task !== undefined) {
     product.task = request.body.task.trim()
   }
